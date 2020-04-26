@@ -1,4 +1,0 @@
-uwsgi
-Flask
-Flask-RESTful
-Flask-JWT
