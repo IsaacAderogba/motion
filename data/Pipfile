@@ -13,6 +13,8 @@ Flask = "*"
 Flask-RESTful = "*"
 Flask-JWT = "*"
 scrapy = "*"
+py2neo = "*"
+environs = "*"
 
 [requires]
 python_version = "3.8"

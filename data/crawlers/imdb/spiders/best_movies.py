@@ -40,5 +40,5 @@ class BestMoviesSpider(CrawlSpider):
             "genre": response.xpath("normalize-space(//div[contains(@class, 'see-more') and contains(@class, 'canwrap')]//a[contains(@href, 'genre')]/text())").getall(),
             'directors': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Director')]//a[contains(@href, 'name')]/text()").getall(),
             'writers': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Writer')]//a[contains(@href, 'name')]/text()").getall(),
-            'stars': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Star')]//a[contains(@href, 'name')]/text()").getall(),
+            'actors': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Star')]//a[contains(@href, 'name')]/text()").getall(),
         }
