@@ -1,9 +1,4 @@
 from py2neo import Graph
-import env
+from .env import NEO4J_DATABASE_URL
 
-graph = Graph(
-    host=env.NEO4J_HOST,
-    port=env.NEO4J_PORT,
-    user=env.NEO4J_USER,
-    password=env.NEO4J_PASSWORD,
-)
+graph = Graph(NEO4J_DATABASE_URL)

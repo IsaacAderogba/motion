@@ -1,4 +1,5 @@
 from py2neo.ogm import GraphObject
+from config.db import graph
 
 
 class BaseModel(GraphObject):
@@ -18,5 +19,17 @@ class BaseModel(GraphObject):
     def all(self):
         return self.match(graph)
 
+    def find(self):
+        return self.match(graph, getattr(self, self.__primarykey__)).first()
+
     def save(self):
+        found_model = self.find()
+
+        if found_model:
+            node = found_model.__node__
+            for key in dict(node):
+                if not getattr(self, key):
+                    print(node[key])
+                    setattr(self, key, node[key])
+
         graph.push(self)

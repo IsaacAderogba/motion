@@ -2,7 +2,7 @@ from py2neo.ogm import Property, RelatedFrom, RelatedTo
 from resources.model import BaseModel
 from resources.genre.genre_model import Genre
 class Movie(BaseModel):
-  __primarykey__ = "uuid"
+  __primarykey__ = "title"
 
   uuid = Property()
   title = Property()

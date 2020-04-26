@@ -3,7 +3,7 @@ from resources.model import BaseModel
 from resources.movie.movie_model import Movie
 
 class Person(BaseModel):
-    __primarykey__ = "uuid"
+    __primarykey__ = "name"
 
     uuid = Property()
     name = Property()

@@ -2,10 +2,11 @@ from py2neo.ogm import Property, RelatedFrom
 from resources.model import BaseModel
 
 class Genre(BaseModel):
-  __primarykey__ = "uuid"
+  __primarykey__ = "name"
 
-  uuid = Property()
   name = Property()
-
+  uuid = Property()
   movies = RelatedFrom("Movie", "IN_GENRE")
+
+  
 
