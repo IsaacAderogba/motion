@@ -17,5 +17,5 @@ class Movie(BaseModel):
   actors = RelatedFrom("Person", "ACTED_IN")
   favourited_by = RelatedFrom("User", "FAVOURITED_BY")
 
-  genres = RelatedTo(Genre)
+  in_genre = RelatedTo(Genre)
 

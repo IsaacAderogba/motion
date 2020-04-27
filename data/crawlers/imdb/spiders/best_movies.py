@@ -30,6 +30,7 @@ class BestMoviesSpider(CrawlSpider):
         return request
 
     def parse_movie(self, response):
+
         yield {
             "title": response.xpath("normalize-space(//div[@class='title_wrapper']/h1/text())").get(),
             "year": int(response.xpath("//span[@id='titleYear']/a/text()").get()),
@@ -37,7 +38,7 @@ class BestMoviesSpider(CrawlSpider):
             'summary': response.xpath("normalize-space(//div[@class='summary_text']/text())").get(),
             "rating": float(response.xpath("//span[@itemprop='ratingValue']/text()").get()),
             "movie_url": response.url,
-            "genre": response.xpath("normalize-space(//div[contains(@class, 'see-more') and contains(@class, 'canwrap')]//a[contains(@href, 'genre')]/text())").getall(),
+            "genres": response.xpath("//div[contains(@class, 'see-more') and contains(@class, 'canwrap')]//a[contains(@href, 'genre')]/text()").getall(),
             'directors': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Director')]//a[contains(@href, 'name')]/text()").getall(),
             'writers': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Writer')]//a[contains(@href, 'name')]/text()").getall(),
             'actors': response.xpath("//div[contains(@class, 'credit_summary_item') and contains(h4, 'Star')]//a[contains(@href, 'name')]/text()").getall(),

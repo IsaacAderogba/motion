@@ -6,6 +6,7 @@ class Genre(BaseModel):
 
   name = Property()
   uuid = Property()
+  
   movies = RelatedFrom("Movie", "IN_GENRE")
 
   
