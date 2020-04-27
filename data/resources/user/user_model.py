@@ -1,15 +1,15 @@
 from py2neo.ogm import Property, RelatedTo
 from resources.model import BaseModel
-from resources.movie.movie_model import Movie
+from resources.movie.movie_model import MovieModel
 
-class User(BaseModel):
+class UserModel(BaseModel):
     __primarykey__ = "user_id"
 
     user_id = Property()
     first_name = Property()
     last_name = Property()
 
-    favourited = RelatedTo(Movie)
+    favourited = RelatedTo(MovieModel)
 
     def find_favourited(self):
         pass

@@ -1,7 +1,7 @@
 from py2neo.ogm import Property, RelatedFrom
 from resources.model import BaseModel
 
-class Genre(BaseModel):
+class GenreModel(BaseModel):
   __primarykey__ = "name"
 
   name = Property()

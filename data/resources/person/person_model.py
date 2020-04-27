@@ -2,7 +2,7 @@ from py2neo.ogm import Property, RelatedTo
 from resources.model import BaseModel
 from resources.movie.movie_model import Movie
 
-class Person(BaseModel):
+class PersonModel(BaseModel):
     __primarykey__ = "name"
 
     name = Property()

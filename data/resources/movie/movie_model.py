@@ -1,9 +1,9 @@
 from py2neo.ogm import Property, RelatedFrom, RelatedTo
 from resources.model import BaseModel
-from resources.genre.genre_model import Genre
+from resources.genre.genre_model import GenreModel
 
 
-class Movie(BaseModel):
+class MovieModel(BaseModel):
     __primarykey__ = "title"
 
     title = Property()
@@ -19,7 +19,7 @@ class Movie(BaseModel):
     actors = RelatedFrom("Person", "ACTED_IN")
     favourites = RelatedFrom("User", "FAVOURITED")
 
-    in_genre = RelatedTo(Genre, "IN_GENRE")
+    in_genre = RelatedTo(GenreModel, "IN_GENRE")
 
     def find_directors(self):
         pass
