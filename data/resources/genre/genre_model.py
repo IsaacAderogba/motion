@@ -1,22 +1,21 @@
 from py2neo.ogm import Property, RelatedFrom
 from resources.model import BaseModel
 
+
 class GenreModel(BaseModel):
-  __primarykey__ = "name"
+    __primarykey__ = "name"
+    __primarylabel__ = "Genre"
 
-  name = Property()
-  uuid = Property()
-  
-  movies = RelatedFrom("Movie", "IN_GENRE")
+    name = Property()
+    uuid = Property()
 
-  def find_movies(self):
-    pass
+    movies = RelatedFrom("Movie", "IN_GENRE")
 
-  def json(self):
-    return {
-      'name': self.name,
-      'uuid': self.uuid
-    }
+    def find_movies(self):
+        pass
 
-  
-
+    def json(self):
+        return {
+            'name': self.name,
+            'uuid': self.uuid
+        }

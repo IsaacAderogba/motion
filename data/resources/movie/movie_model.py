@@ -5,6 +5,7 @@ from resources.genre.genre_model import GenreModel
 
 class MovieModel(BaseModel):
     __primarykey__ = "title"
+    __primarylabel__ = "Movie"
 
     title = Property()
     uuid = Property()

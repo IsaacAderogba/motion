@@ -1,11 +1,14 @@
-from flask import Flask
-from resources.movie.movie_model import Movie
+# TODO - Require JWT for API requests
 
-movie = Movie.find_by_id("Modern Times\xa0")
-for genre in movie.in_genre._related_objects:
-    print(genre[0].json())
+from flask import Flask
+from flask_restful import Api
+from resources.user.user_controller import User
+
 
 app = Flask(__name__)
+api = Api(app)
+
+api.add_resource(User, '/api/user/<int:user_id>')
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

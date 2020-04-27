@@ -4,6 +4,7 @@ from resources.movie.movie_model import MovieModel
 
 class UserModel(BaseModel):
     __primarykey__ = "user_id"
+    __primarylabel__ = "User"
 
     user_id = Property()
     first_name = Property()
