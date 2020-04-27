@@ -9,5 +9,14 @@ class Genre(BaseModel):
   
   movies = RelatedFrom("Movie", "IN_GENRE")
 
+  def find_movies(self):
+    pass
+
+  def json(self):
+    return {
+      'name': self.name,
+      'uuid': self.uuid
+    }
+
   
 

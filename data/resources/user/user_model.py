@@ -9,4 +9,14 @@ class User(BaseModel):
     first_name = Property()
     last_name = Property()
 
-    acted_in = RelatedTo(Movie)
+    favourited = RelatedTo(Movie)
+
+    def find_favourited(self):
+        pass
+
+    def json(self):
+        return {
+            "user_id": self.user_id,
+            "first_name": self.first_name,
+            "last_name": self.last_name
+        }

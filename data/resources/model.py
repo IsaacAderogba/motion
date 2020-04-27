@@ -15,15 +15,16 @@ class BaseModel(GraphObject):
             if hasattr(self, key):
                 setattr(self, key, value)
 
-    @property
-    def all(self):
-        return self.match(graph)
+    @classmethod
+    def find_by_id(cls, primary_key):
+        return cls.match(graph, primary_key).first()
 
-    def find(self):
-        return self.match(graph, getattr(self, self.__primarykey__)).first()
+    @classmethod
+    def find_all(cls):
+        return cls.match(graph)
 
     def save(self):
-        found_model = self.find()
+        found_model = self.find_by_id(getattr(self, self.__primarykey__))
 
         if found_model:
             node = found_model.__node__
