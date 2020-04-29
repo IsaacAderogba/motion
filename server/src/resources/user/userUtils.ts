@@ -1,20 +1,30 @@
 // libraries
 import jwt from "jsonwebtoken";
+import { UserInputError } from "apollo-server-express";
 
 // helpers
 import { IUserModel, IAuthUser, IUserPayload } from "./userModel";
 
-export const userQueryKeys = {};
+export const userQueryKeys = {
+  user: "user",
+};
 
-export const userMutationKeys = {};
+export const userMutationKeys = {
+  loginUser: "loginUser",
+  registerUser: "registerUser",
+  updateUser: "updateUser",
+  deleteUser: "deleteUser",
+};
 
-export const userErrors = {};
+export const userErrors = {
+  UserAlreadyExists: new UserInputError("User already exists"),
+  UserNotFound: new UserInputError("User not found"),
+  EmailPasswordWrong: new UserInputError(
+    "Incorrect email/password combination"
+  ),
+};
 
-export const generateJwtToken = ({
-  id,
-  firstName,
-  lastName,
-}: IUserPayload) => {
+export const generateJwtToken = ({ id, firstName, lastName }: IUserPayload) => {
   const payload = {
     id,
     firstName,

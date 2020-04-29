@@ -1,13 +1,12 @@
-// libraries
-import { SQLDataSource } from "datasource-sql";
-import { RESTDataSource } from "apollo-datasource-rest";
+// libs
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { SQLDataSource } from "datasource-sql";
 
 // helpers
 import UserModel, { IUserModel, IUserPayload } from "./userModel";
+import { Maybe } from "../types";
 import { generateAuthUser } from "./userUtils";
-import { Maybe } from "../utils";
 
 export class UserController extends SQLDataSource {
   async registerUser(
@@ -60,7 +59,7 @@ export class UserController extends SQLDataSource {
 
   async updateUser(user: Partial<IUserModel>, where: Partial<IUserModel>) {}
 
-  async deleteUser(where: Partial<IUserModel>) {}
-}
+  async deleteUser(where: Partial<IUserModel>) {
 
-export class UserAPI extends RESTDataSource {}
+  }
+}

@@ -2,6 +2,37 @@
 ### Do not make changes to this file directly
 
 
+type AuthUser {
+  avatarURL: String
+  firstName: String!
+  id: ID!
+  isVerified: Boolean!
+  lastName: String!
+  token: String!
+}
+
+type Mutation {
+  registerUser(registerInput: RegisterInput!): AuthUser!
+}
+
 type Query {
-  ok: Boolean!
+  user: User
+}
+
+input RegisterInput {
+  avatarURL: String
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+type User {
+  avatarId: String
+  avatarURL: String
+  email: String!
+  firstName: String!
+  id: ID!
+  isVerified: Boolean!
+  lastName: String!
 }

@@ -1,15 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "lib": ["es6"],
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "lib": ["es2015"],
     "outDir": "./dist",
+    "baseUrl": ".",
     "rootDir": "./src",
-    "strict": true,
     "allowJs": true,
     "strictNullChecks": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./node_modules/@types", "./typings"]
+  },
 }

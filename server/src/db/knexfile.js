@@ -1,6 +1,5 @@
-require('ts-node/register');
 
-export = {
+module.exports = {
   test: {
     client: "pg",
     connection: "postgres://localhost/motion-test",

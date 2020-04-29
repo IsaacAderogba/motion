@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-
+import * as ctx from "../resources/Context"
 
 
 
@@ -14,13 +14,38 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  RegisterInput: { // input type
+    avatarURL?: string | null; // String
+    email: string; // String!
+    firstName: string; // String!
+    lastName: string; // String!
+    password: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
+  AuthUser: { // root type
+    avatarURL?: string | null; // String
+    firstName: string; // String!
+    id: string; // ID!
+    isVerified: boolean; // Boolean!
+    lastName: string; // String!
+    token: string; // String!
+  }
+  Mutation: {};
   Query: {};
+  User: { // root type
+    avatarId?: string | null; // String
+    avatarURL?: string | null; // String
+    email: string; // String!
+    firstName: string; // String!
+    id: string; // ID!
+    isVerified: boolean; // Boolean!
+    lastName: string; // String!
+  }
   String: string;
   Int: number;
   Float: number;
@@ -29,15 +54,41 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  RegisterInput: NexusGenInputs['RegisterInput'];
 }
 
 export interface NexusGenFieldTypes {
+  AuthUser: { // field return type
+    avatarURL: string | null; // String
+    firstName: string; // String!
+    id: string; // ID!
+    isVerified: boolean; // Boolean!
+    lastName: string; // String!
+    token: string; // String!
+  }
+  Mutation: { // field return type
+    registerUser: NexusGenRootTypes['AuthUser']; // AuthUser!
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    user: NexusGenRootTypes['User'] | null; // User
+  }
+  User: { // field return type
+    avatarId: string | null; // String
+    avatarURL: string | null; // String
+    email: string; // String!
+    firstName: string; // String!
+    id: string; // ID!
+    isVerified: boolean; // Boolean!
+    lastName: string; // String!
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    registerUser: { // args
+      registerInput: NexusGenInputs['RegisterInput']; // RegisterInput!
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -45,9 +96,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Query";
+export type NexusGenObjectNames = "AuthUser" | "Mutation" | "Query" | "User";
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = "RegisterInput";
 
 export type NexusGenEnumNames = never;
 
@@ -58,7 +109,7 @@ export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 export type NexusGenUnionNames = never;
 
 export interface NexusGenTypes {
-  context: any;
+  context: ctx.Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   argTypes: NexusGenArgTypes;
