@@ -11,7 +11,7 @@ import { Query, Mutation, Subscription, Middleware } from "./resources";
 import { knex } from "./db/knexConfig";
 import { Model } from "objection";
 
-import { UserController } from "./resources/user/UserDatasource";
+import { UserController, UserFlaskAPI } from "./resources/user/UserDatasource";
 
 Model.knex(knex);
 const app = express();
@@ -23,7 +23,6 @@ const httpServer = http.createServer(app);
 
 const schema = makeSchema({
   types: [Query, Mutation, Subscription],
-  shouldGenerateArtifacts: process.env.NODE_ENV === "development",
   outputs: {
     schema: __dirname + "/generated/schema.graphql",
     typegen: __dirname + "/generated/typings.ts",
@@ -35,12 +34,11 @@ const schema = makeSchema({
         alias: "ctx",
         source: __dirname + "/resources/Context.ts",
       },
-      {
-        source: __dirname + "/resources/types.ts",
-        alias: "dbt",
-        typeMatch: (name) =>
-          new RegExp(`(?:interface|type|class)\\s+(${name}s?)\\W`, "g"),
-      },
+      // {
+      //   alias: "t",
+      //   source: __dirname + "/resources/types.ts",
+      //   typeMatch: (type) => new RegExp(`(?:interface|type|class)\\s+(I${type})\\W`, "g"),
+      // },
     ],
   },
 });
@@ -52,6 +50,9 @@ const apolloServer = new ApolloServer({
   context: async ({ req }) => {
     return {
       req,
+      user: await UserController.authenticateUser(
+        req.headers.authorization || ""
+      ),
     };
   },
   subscriptions: {
@@ -64,7 +65,8 @@ const apolloServer = new ApolloServer({
     path: "/subscriptions",
   },
   dataSources: () => ({
-    userController: new UserController(knex),
+    UserController,
+    UserFlaskAPI,
   }),
 });
 

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { UserInputError } from "apollo-server-express";
 
 // helpers
-import { IUserModel, IAuthUser, IUserPayload } from "./userModel";
+import UserModel, { IUserModel, IAuthUser, IUserPayload } from "./UserModel";
 
 export const userQueryKeys = {
   user: "user",
@@ -48,3 +48,4 @@ export const generateAuthUser = (user: IUserModel): IAuthUser => {
     token: generateJwtToken(user),
   };
 };
+

@@ -1,6 +1,12 @@
-import { UserController } from "./user/UserDatasource";
-import { knex } from "../db/knexConfig";
+import { UserController, UserFlaskAPI } from "./user/UserDatasource";
+import { IAuthorizedUser } from "./user/UserModel";
+import { Maybe } from "./types";
 
-export class Context {
-  userController = new UserController(knex);
+export interface Context {
+  dataSources: {
+    UserController: typeof UserController;
+    UserFlaskAPI: typeof UserFlaskAPI;
+  };
+
+  user: Maybe<IAuthorizedUser>;
 }

@@ -65,6 +65,7 @@ export interface NexusGenFieldTypes {
     isVerified: boolean; // Boolean!
     lastName: string; // String!
     token: string; // String!
+    user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
     registerUser: NexusGenRootTypes['AuthUser']; // AuthUser!

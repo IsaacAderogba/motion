@@ -9,6 +9,7 @@ type AuthUser {
   isVerified: Boolean!
   lastName: String!
   token: String!
+  user: User
 }
 
 type Mutation {

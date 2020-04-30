@@ -1,4 +1,4 @@
-import { objectType, inputObjectType } from '@nexus/schema';
+import { objectType, inputObjectType } from "@nexus/schema";
 
 export const AuthUser = objectType({
   name: "AuthUser",
@@ -9,13 +9,13 @@ export const AuthUser = objectType({
     t.string("avatarURL", { nullable: true });
     t.string("token");
     t.boolean("isVerified");
-    // t.field("user", {
-    //   type: User,
-    //   nullable: false,
-    //   resolve: (authUser, args, { dataSources }) => {
-    //     return dataSources.userAPI.readUser({ id: authUser.userId });
-    //   },
-    // });
+    t.field("user", {
+      type: User,
+      nullable: true,
+      resolve: (authUser, args, { dataSources: { UserController} }) => {
+        return UserController.readUser({ id: parseInt(authUser.id) });
+      },
+    });
   },
 });
 
