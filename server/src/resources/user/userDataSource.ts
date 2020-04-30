@@ -73,16 +73,31 @@ class _UserController extends SQLDataSource {
     return foundUser.toData();
   }
 
-  async updateUser(user: Partial<IUserModel>, where: Partial<IUserModel>) {}
+  async updateUser(
+    user: Partial<IUserModel>,
+    where: Partial<IUserModel>,
+    trx: Objection.Transaction
+  ) {
+    const updatedUser = await UserModel.query(trx)
+      .findOne(where)
+      .throwIfNotFound()
+      .updateAndFetch(user);
 
-  async deleteUser(where: Partial<IUserModel>) {}
+    return updatedUser.toData();
+  }
+
+  async deleteUser(where: Pick<IUserModel, "id">, trx: Objection.Transaction) {
+    const deletedUser = await UserModel.query(trx)
+      .deleteById(where.id)
+      .where({ id: where.id })
+      .returning("*")
+      .first();
+
+    return deletedUser.toData();
+  }
 }
 
-// saves us having to initialise it everywhere we use it
-export const UserController = new _UserController();
-
 // UserAPI for interacting with our Neo4j server
-
 class _UserFlaskAPI extends RESTDataSource {
   constructor() {
     super();
@@ -99,4 +114,5 @@ class _UserFlaskAPI extends RESTDataSource {
   }
 }
 
+export const UserController = new _UserController();
 export const UserFlaskAPI = new _UserFlaskAPI();
