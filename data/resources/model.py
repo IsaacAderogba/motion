@@ -23,6 +23,9 @@ class BaseModel(GraphObject):
     def find_all(cls):
         return cls.match(graph)
 
+    def delete(self):
+        graph.delete(self)
+
     def save(self):
         found_model = self.find_by_id(getattr(self, self.__primarykey__))
 

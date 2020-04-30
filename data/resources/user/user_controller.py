@@ -21,6 +21,25 @@ class User(Resource):
 
         return user.json(), 201
 
+    def get(self, user_id):
+        pass
+
+    def put(self, user_id):
+        data = User.parser.parse_args()
+        user = UserModel(**data)
+        user.save()
+
+        return user.json(), 200
+
+    def delete(self, user_id):
+        user = UserModel.find_by_id(user_id)
+
+        if user:
+            user.delete()
+            return user.json(), 200
+        else:
+            return {"message": "User with id of {} does not exist".format(user_id)}
+
 
 class UserList(Resource):
     pass
