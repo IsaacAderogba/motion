@@ -6,14 +6,15 @@ import { RESTDataSource } from "apollo-datasource-rest";
 import Objection from "objection";
 
 // helpers
-import UserModel, {
+import {
+  UserModel,
   IUserModel,
   IUserPayload,
   IAuthorizedUser,
   INeo4jUser,
 } from "./UserModel";
 import { Maybe } from "../types";
-import { generateAuthUser } from "./userUtils";
+import { generateAuthUser } from "./UserUtils";
 import { knexConfig } from "../../db/knexConfig";
 
 class _UserController extends SQLDataSource {

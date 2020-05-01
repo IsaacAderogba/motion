@@ -12,8 +12,11 @@ export const AuthUser = objectType({
     t.field("user", {
       type: User,
       nullable: true,
-      resolve: (authUser, args, { dataSources: { UserController} }) => {
-        return UserController.readUser({ id: parseInt(authUser.id) });
+      resolve: async (authUser, args, { dataSources: { UserController } }) => {
+        const user = await UserController.readUser({
+          id: parseInt(authUser.id),
+        });
+        return { ...user, id: user.id.toString() };
       },
     });
   },

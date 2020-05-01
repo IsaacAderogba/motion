@@ -8,8 +8,8 @@ import {
   User,
   LoginInput,
   UserInput,
-} from "./userTypes";
-import { userErrors } from "./userUtils";
+} from "./UserTypes";
+import { userErrors } from "./UserUtils";
 
 export const UserQuery = extendType({
   type: "Query",
@@ -24,7 +24,8 @@ export const UserQuery = extendType({
       ) => {
         if (!user) return null;
 
-        return UserController.readUser({ id: user.id });
+        const readUser = await UserController.readUser({ id: user.id });
+        return { ...readUser, id: readUser.id.toString() };
       },
     });
   },
@@ -105,13 +106,13 @@ export const UserMutation = extendType({
 
           await UserFlaskAPI.putUser({
             ...updatedUser,
-            id: parseInt(updatedUser.id),
+            id: updatedUser.id,
           });
 
           return updatedUser;
         });
 
-        return result;
+        return { ...result, id: result.id.toString() };
       },
     });
 
@@ -123,17 +124,17 @@ export const UserMutation = extendType({
         args,
         { dataSources: { UserController, UserFlaskAPI }, user }
       ) => {
-        const result = UserController.model.transaction(async (trx) => {
+        const result = await UserController.model.transaction(async (trx) => {
           const deletedUser = await UserController.deleteUser(
             { id: user.id },
             trx
           );
 
-          await UserFlaskAPI.deleteUser(parseInt(deletedUser.id));
+          await UserFlaskAPI.deleteUser(deletedUser.id);
           return deletedUser;
         });
 
-        return result;
+        return { ...result, id: result.id.toString() };
       },
     });
   },

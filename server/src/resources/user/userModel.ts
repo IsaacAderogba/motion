@@ -31,7 +31,7 @@ export interface IUserPayload {
   lastName: string;
 }
 
-class UserModel extends Model implements IUserModel {
+export class UserModel extends Model implements IUserModel {
   id!: number;
   firstName!: string;
   lastName!: string;
@@ -41,9 +41,9 @@ class UserModel extends Model implements IUserModel {
   avatarId?: string;
   isVerified!: boolean;
 
-  toData(): IUserModel<string> {
+  toData(): IUserModel {
     return {
-      id: this.id.toString(),
+      id: this.id,
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email,
@@ -75,5 +75,3 @@ class UserModel extends Model implements IUserModel {
     };
   }
 }
-
-export default UserModel;

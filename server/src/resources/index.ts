@@ -1,6 +1,6 @@
-import { UserQuery, UserMutation } from "./user/userResolvers";
+import { UserQuery, UserMutation } from "./user/UserResolvers";
 
 export const Query = [UserQuery];
 export const Mutation = [UserMutation];
-export const Subscription = [];
-export const Middleware = [];
+export const Subscription: any[] = [];
+export const Middleware: any[] = [];
