@@ -38,12 +38,12 @@ class _UserController extends SQLDataSource {
     return authUser;
   }
 
-  async loginUser(loginDetails: Pick<IUserModel, "email" | "password">) {
+  async loginUser(loginInput: Pick<IUserModel, "email" | "password">) {
     const foundUser = await UserModel.query()
-      .findOne(loginDetails)
+      .findOne({ email: loginInput.email })
       .throwIfNotFound();
 
-    if (await bcrypt.compare(loginDetails.password, foundUser.password)) {
+    if (await bcrypt.compare(loginInput.password, foundUser.password)) {
       const authUser = generateAuthUser(foundUser);
       return authUser;
     }
@@ -78,11 +78,11 @@ class _UserController extends SQLDataSource {
     where: Partial<IUserModel>,
     trx: Objection.Transaction
   ) {
-    const updatedUser = await UserModel.query(trx)
+    const foundUser = await UserModel.query(trx)
       .findOne(where)
-      .throwIfNotFound()
-      .updateAndFetch(user);
+      .throwIfNotFound();
 
+    const updatedUser = await foundUser.$query().patchAndFetch(user);
     return updatedUser.toData();
   }
 
@@ -111,6 +111,20 @@ class _UserFlaskAPI extends RESTDataSource {
       last_name: user.lastName,
     });
     return savedUser;
+  }
+
+  async putUser(user: Pick<IUserModel, "id" | "firstName" | "lastName">) {
+    const updatedUser = await this.put<INeo4jUser>(`/user/${user.id}`, {
+      user_id: user.id,
+      first_name: user.firstName,
+      last_name: user.lastName,
+    });
+    return updatedUser;
+  }
+
+  async deleteUser(id: IUserModel["id"]) {
+    const deletedUser = await this.delete<INeo4jUser>(`/user/${id}`);
+    return deletedUser;
   }
 }
 

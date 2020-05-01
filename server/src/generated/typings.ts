@@ -14,12 +14,22 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  LoginInput: { // input type
+    email: string; // String!
+    password: string; // String!
+  }
   RegisterInput: { // input type
     avatarURL?: string | null; // String
     email: string; // String!
     firstName: string; // String!
     lastName: string; // String!
     password: string; // String!
+  }
+  UserInput: { // input type
+    firstName?: string | null; // String
+    isVerified?: boolean | null; // Boolean
+    lastName?: string | null; // String
+    photoId?: string | null; // String
   }
 }
 
@@ -54,7 +64,9 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  LoginInput: NexusGenInputs['LoginInput'];
   RegisterInput: NexusGenInputs['RegisterInput'];
+  UserInput: NexusGenInputs['UserInput'];
 }
 
 export interface NexusGenFieldTypes {
@@ -68,7 +80,10 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
+    deleteUser: NexusGenRootTypes['User']; // User!
+    loginUser: NexusGenRootTypes['AuthUser'] | null; // AuthUser
     registerUser: NexusGenRootTypes['AuthUser']; // AuthUser!
+    updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
     user: NexusGenRootTypes['User'] | null; // User
@@ -86,8 +101,14 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    loginUser: { // args
+      loginInput: NexusGenInputs['LoginInput']; // LoginInput!
+    }
     registerUser: { // args
       registerInput: NexusGenInputs['RegisterInput']; // RegisterInput!
+    }
+    updateUser: { // args
+      userInput: NexusGenInputs['UserInput']; // UserInput!
     }
   }
 }
@@ -99,7 +120,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "AuthUser" | "Mutation" | "Query" | "User";
 
-export type NexusGenInputNames = "RegisterInput";
+export type NexusGenInputNames = "LoginInput" | "RegisterInput" | "UserInput";
 
 export type NexusGenEnumNames = never;
 

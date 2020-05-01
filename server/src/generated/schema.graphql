@@ -12,8 +12,16 @@ type AuthUser {
   user: User
 }
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
+  deleteUser: User!
+  loginUser(loginInput: LoginInput!): AuthUser
   registerUser(registerInput: RegisterInput!): AuthUser!
+  updateUser(userInput: UserInput!): User
 }
 
 type Query {
@@ -36,4 +44,11 @@ type User {
   id: ID!
   isVerified: Boolean!
   lastName: String!
+}
+
+input UserInput {
+  firstName: String
+  isVerified: Boolean
+  lastName: String
+  photoId: String
 }
