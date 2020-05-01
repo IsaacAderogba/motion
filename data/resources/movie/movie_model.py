@@ -19,6 +19,7 @@ class MovieModel(BaseModel):
     writers = RelatedFrom("Person", "WROTE")
     actors = RelatedFrom("Person", "ACTED_IN")
     favourites = RelatedFrom("User", "FAVOURITED")
+    reviews = RelatedFrom("Review", "REVIEWED")
 
     in_genre = RelatedTo(GenreModel, "IN_GENRE")
 

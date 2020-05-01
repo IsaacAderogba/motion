@@ -8,9 +8,9 @@
     "dev": "ts-node-dev -P ./tsconfig.json --no-notify --transpileOnly --respawn ./src",
     "build": "ts-node -P ./tsconfig.json --log-error src/index.ts",
     "debug": "ts-node-dev -P ./tsconfig.json --inspect-brk --no-notify --transpileOnly --respawn ./src",
-    "knex:migrate:make": "knex --knexfile src/db/knexfile.ts migrate:make",
-    "knex:migrate:latest": "knex --knexfile src/db/knexfile.ts migrate:latest",
-    "knex:migrate:rollback": "knex --knexfile src/db/knexfile.ts migrate:rollback"
+    "knex:migrate:make": "knex --knexfile src/db/knexfile.js migrate:make",
+    "knex:migrate:latest": "knex --knexfile src/db/knexfile.js migrate:latest",
+    "knex:migrate:rollback": "knex --knexfile src/db/knexfile.js migrate:rollback"
   },
   "keywords": [],
   "author": "",
