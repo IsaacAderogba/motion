@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { SQLDataSource } from "datasource-sql";
 import { RESTDataSource } from "apollo-datasource-rest";
-import Objection from "objection";
+import { Transaction } from "objection";
 
 // helpers
 import {
@@ -26,11 +26,11 @@ class _UserController extends SQLDataSource {
 
   async registerUser(
     user: Pick<IUserModel, "firstName" | "lastName" | "email" | "password">,
-    trx: Objection.Transaction
+    trx: Transaction
   ) {
     const password = await bcrypt.hash(user.password, 12);
 
-    const insertedUser = await UserModel.query(trx).insertAndFetch({
+    const insertedUser = await this.model.query(trx).insertAndFetch({
       ...user,
       password,
     });
@@ -40,7 +40,8 @@ class _UserController extends SQLDataSource {
   }
 
   async loginUser(loginInput: Pick<IUserModel, "email" | "password">) {
-    const foundUser = await UserModel.query()
+    const foundUser = await this.model
+      .query()
       .findOne({ email: loginInput.email })
       .throwIfNotFound();
 
@@ -60,7 +61,8 @@ class _UserController extends SQLDataSource {
       process.env.JWT_SECRET || "secret"
     ) as IUserPayload;
 
-    const foundUser = await UserModel.query()
+    const foundUser = await this.model
+      .query()
       .findById(decodedToken.id)
       .throwIfNotFound();
 
@@ -70,31 +72,33 @@ class _UserController extends SQLDataSource {
   }
 
   async readUser(where: Partial<IUserModel>) {
-    const foundUser = await UserModel.query().findOne(where).throwIfNotFound();
-    return foundUser.toData();
+    const foundUser = await this.model.query().findOne(where).throwIfNotFound();
+    return foundUser.$toData();
   }
 
   async updateUser(
     user: Partial<IUserModel>,
     where: Partial<IUserModel>,
-    trx: Objection.Transaction
+    trx: Transaction
   ) {
-    const foundUser = await UserModel.query(trx)
+    const foundUser = await this.model
+      .query(trx)
       .findOne(where)
       .throwIfNotFound();
 
     const updatedUser = await foundUser.$query().patchAndFetch(user);
-    return updatedUser.toData();
+    return updatedUser.$toData();
   }
 
-  async deleteUser(where: Pick<IUserModel, "id">, trx: Objection.Transaction) {
-    const deletedUser = await UserModel.query(trx)
+  async deleteUser(where: Pick<IUserModel, "id">, trx: Transaction) {
+    const deletedUser = await this.model
+      .query(trx)
       .deleteById(where.id)
       .where({ id: where.id })
       .returning("*")
       .first();
 
-    return deletedUser.toData();
+    return deletedUser.$toData();
   }
 }
 

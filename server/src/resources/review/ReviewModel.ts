@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import { INeo4jUser } from "../user/UserModel";
 
 export interface IReviewModel<Id = number> {
   id: Id;
@@ -6,12 +7,22 @@ export interface IReviewModel<Id = number> {
   movieId: string;
 }
 
+export interface INeo4jReview extends IReviewModel {
+  title?: string;
+  description?: string;
+  rating: number;
+  createdAt: string;
+  updatedAt: string;
+  user: INeo4jUser;
+  reviewed_movie: any;
+}
+
 export class ReviewModel extends Model implements IReviewModel {
   id!: number;
   userId!: number;
   movieId!: string;
 
-  toData(): IReviewModel {
+  $toData(): IReviewModel {
     return {
       id: this.id,
       userId: this.userId,

@@ -41,7 +41,7 @@ export class UserModel extends Model implements IUserModel {
   avatarId?: string;
   isVerified!: boolean;
 
-  toData(): IUserModel {
+  $toData(): IUserModel {
     return {
       id: this.id,
       firstName: this.firstName,
