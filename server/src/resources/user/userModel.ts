@@ -23,11 +23,7 @@ export interface IAuthUser {
   token: string;
 }
 
-export interface INeo4jUser {
-  user_id: number;
-  first_name: string;
-  last_name: string;
-}
+export type INeo4jUser = Pick<IUserModel, "id" | "firstName" | "lastName">;
 
 export interface IUserPayload {
   id: number;

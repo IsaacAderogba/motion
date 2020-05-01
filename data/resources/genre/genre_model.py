@@ -6,8 +6,8 @@ class GenreModel(BaseModel):
     __primarykey__ = "name"
     __primarylabel__ = "Genre"
 
+    id = Property()
     name = Property()
-    uuid = Property()
 
     movies = RelatedFrom("Movie", "IN_GENRE")
 
@@ -16,6 +16,6 @@ class GenreModel(BaseModel):
 
     def json(self):
         return {
-            'name': self.name,
-            'uuid': self.uuid
+            'id': self.id,
+            'name': self.name
         }

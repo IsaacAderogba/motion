@@ -7,8 +7,8 @@ class PersonModel(BaseModel):
     __primarykey__ = "name"
     __primarylabel__ = "Person"
 
+    id = Property()
     name = Property()
-    uuid = Property()
 
     acted_in = RelatedTo(MovieModel)
     directed = RelatedTo(MovieModel)
@@ -25,6 +25,6 @@ class PersonModel(BaseModel):
 
     def json(self):
         return {
-            "name": self.name,
-            "uuid": self.uuid
+            "id": self.id,
+            "name": self.name
         }

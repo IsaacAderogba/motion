@@ -4,16 +4,16 @@ from resources.user.user_model import UserModel
 
 class User(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument("user_id", type=int, required=True,
+    parser.add_argument("id", type=int, required=True,
                         help="This field cannot be left blank")
-    parser.add_argument("first_name", type=str, required=True,
+    parser.add_argument("firstName", type=str, required=True,
                         help="This field cannot be left blank")
-    parser.add_argument("last_name", type=str, required=True,
+    parser.add_argument("lastName", type=str, required=True,
                         help="This field cannot be left blank")
 
-    def post(self, user_id):
-        if UserModel.find_by_id(user_id):
-            return {"message": "A user with id '{}' already exists.".format(user_id)}, 400
+    def post(self, id):
+        if UserModel.find_by_id(id):
+            return {"message": "A user with id '{}' already exists.".format(id)}, 400
 
         data = User.parser.parse_args()
         user = UserModel(**data)
@@ -21,24 +21,24 @@ class User(Resource):
 
         return user.json(), 201
 
-    def get(self, user_id):
+    def get(self, id):
         pass
 
-    def put(self, user_id):
+    def put(self, id):
         data = User.parser.parse_args()
         user = UserModel(**data)
         user.save()
 
         return user.json(), 200
 
-    def delete(self, user_id):
-        user = UserModel.find_by_id(user_id)
+    def delete(self, id):
+        user = UserModel.find_by_id(id)
 
         if user:
             user.delete()
             return user.json(), 200
         else:
-            return {"message": "User with id of {} does not exist".format(user_id)}
+            return {"message": "User with id of {} does not exist".format(id)}
 
 
 class UserList(Resource):

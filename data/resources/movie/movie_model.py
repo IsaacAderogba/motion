@@ -7,13 +7,13 @@ class MovieModel(BaseModel):
     __primarykey__ = "title"
     __primarylabel__ = "Movie"
 
+    id = Property()
     title = Property()
-    uuid = Property()
     year = Property()
     duration = Property()
     summary = Property()
     rating = Property()
-    movie_url = Property()
+    movieUrl = Property()
 
     directors = RelatedFrom("Person", "DIRECTED")
     writers = RelatedFrom("Person", "WROTE")
@@ -39,11 +39,11 @@ class MovieModel(BaseModel):
 
     def json(self):
         return {
+            "id": self.id,
             "title": self.title,
-            "uuid": self.uuid,
             "year": self.year,
             "duration": self.duration,
             "summary": self.summary,
             "rating": self.rating,
-            "movie_url": self.movie_url
+            "movieUrl": self.movieUrl
         }

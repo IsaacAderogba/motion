@@ -104,25 +104,17 @@ class _UserFlaskAPI extends RESTDataSource {
     this.baseURL = `${process.env.FLASK_API_URL}/api`;
   }
 
-  async postUser(user: Pick<IUserModel, "id" | "firstName" | "lastName">) {
-    const savedUser = await this.post<INeo4jUser>(`/user/${user.id}`, {
-      user_id: user.id,
-      first_name: user.firstName,
-      last_name: user.lastName,
-    });
+  async postUser(user: INeo4jUser) {
+    const savedUser = await this.post<INeo4jUser>(`/user/${user.id}`, user);
     return savedUser;
   }
 
-  async putUser(user: Pick<IUserModel, "id" | "firstName" | "lastName">) {
-    const updatedUser = await this.put<INeo4jUser>(`/user/${user.id}`, {
-      user_id: user.id,
-      first_name: user.firstName,
-      last_name: user.lastName,
-    });
+  async putUser(user: INeo4jUser) {
+    const updatedUser = await this.put<INeo4jUser>(`/user/${user.id}`, user);
     return updatedUser;
   }
 
-  async deleteUser(id: IUserModel["id"]) {
+  async deleteUser(id: INeo4jUser["id"]) {
     const deletedUser = await this.delete<INeo4jUser>(`/user/${id}`);
     return deletedUser;
   }
