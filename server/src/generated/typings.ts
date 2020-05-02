@@ -31,6 +31,12 @@ export interface NexusGenInputs {
     rating: number; // Float!
     title?: string | null; // String
   }
+  ReviewWhere: { // input type
+    id: string; // ID!
+    movieId?: string | null; // String
+    rating?: number | null; // Float
+    userId?: number | null; // Int
+  }
   UserInput: { // input type
     firstName?: string | null; // String
     isVerified?: boolean | null; // Boolean
@@ -92,6 +98,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   LoginInput: NexusGenInputs['LoginInput'];
   RegisterInput: NexusGenInputs['RegisterInput'];
   ReviewInput: NexusGenInputs['ReviewInput'];
+  ReviewWhere: NexusGenInputs['ReviewWhere'];
   UserInput: NexusGenInputs['UserInput'];
 }
 
@@ -116,12 +123,15 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createReview: NexusGenRootTypes['Review']; // Review!
+    deleteReview: NexusGenRootTypes['Review']; // Review!
     deleteUser: NexusGenRootTypes['User']; // User!
     loginUser: NexusGenRootTypes['AuthUser'] | null; // AuthUser
     registerUser: NexusGenRootTypes['AuthUser']; // AuthUser!
+    updateReview: NexusGenRootTypes['Review']; // Review!
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
+    review: NexusGenRootTypes['Review'] | null; // Review
     user: NexusGenRootTypes['User'] | null; // User
   }
   Review: { // field return type
@@ -152,14 +162,26 @@ export interface NexusGenArgTypes {
     createReview: { // args
       reviewInput: NexusGenInputs['ReviewInput']; // ReviewInput!
     }
+    deleteReview: { // args
+      reviewWhere: NexusGenInputs['ReviewWhere']; // ReviewWhere!
+    }
     loginUser: { // args
       loginInput: NexusGenInputs['LoginInput']; // LoginInput!
     }
     registerUser: { // args
       registerInput: NexusGenInputs['RegisterInput']; // RegisterInput!
     }
+    updateReview: { // args
+      reviewInput: NexusGenInputs['ReviewInput']; // ReviewInput!
+      reviewWhere: NexusGenInputs['ReviewWhere']; // ReviewWhere!
+    }
     updateUser: { // args
       userInput: NexusGenInputs['UserInput']; // UserInput!
+    }
+  }
+  Query: {
+    review: { // args
+      reviewWhere: NexusGenInputs['ReviewWhere']; // ReviewWhere!
     }
   }
 }
@@ -171,7 +193,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "AuthUser" | "Movie" | "Mutation" | "Query" | "Review" | "User";
 
-export type NexusGenInputNames = "LoginInput" | "RegisterInput" | "ReviewInput" | "UserInput";
+export type NexusGenInputNames = "LoginInput" | "RegisterInput" | "ReviewInput" | "ReviewWhere" | "UserInput";
 
 export type NexusGenEnumNames = never;
 

@@ -51,7 +51,7 @@ class _ReviewController extends SQLDataSource {
     const deletedReview = await this.model
       .query(trx)
       .deleteById(where.id)
-      .where(where)
+      .where({ id: where.id })
       .returning("*")
       .first();
 
@@ -83,6 +83,13 @@ class _ReviewFlaskAPI extends RESTDataSource {
     return savedReview;
   }
 
+  async readReview(review: Partial<INeo4jReview>) {
+    const fetchedReview = await this.get<INeo4jReview>(
+      `/review/${review.id}`,
+      review
+    );
+    return fetchedReview;
+  }
   async putReview(review: Partial<INeo4jReview>) {
     const updatedReview = await this.put<INeo4jReview>(
       `/review/${review.id}`,
@@ -92,7 +99,7 @@ class _ReviewFlaskAPI extends RESTDataSource {
   }
 
   async deleteReview(id: INeo4jReview["id"]) {
-    const deletedReview = await this.put<INeo4jReview>(`/review/${id}`);
+    const deletedReview = await this.delete<INeo4jReview>(`/review/${id}`);
     return deletedReview;
   }
 }

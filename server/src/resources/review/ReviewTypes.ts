@@ -12,6 +12,16 @@ export const ReviewInput = inputObjectType({
   },
 });
 
+export const ReviewWhere = inputObjectType({
+  name: "ReviewWhere",
+  definition(t) {
+    t.id("id", { required: true });
+    t.int("userId", { required: false });
+    t.string("movieId", { required: false });
+    t.float("rating", { required: false });
+  },
+});
+
 export const Review = objectType({
   name: "Review",
   definition(t) {
@@ -26,8 +36,9 @@ export const Review = objectType({
     t.field("user", {
       type: User,
       nullable: true,
-      resolve: async (parent, args, context) => {
-        return null;
+      resolve: async (parent, args, { dataSources: { UserController } }) => {
+        const user = await UserController.readUser({ id: parent.userId });
+        return { ...user, id: user.id.toString() };
       },
     });
     t.field("movie", {

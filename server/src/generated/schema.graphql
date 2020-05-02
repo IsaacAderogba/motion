@@ -29,13 +29,16 @@ type Movie {
 
 type Mutation {
   createReview(reviewInput: ReviewInput!): Review!
+  deleteReview(reviewWhere: ReviewWhere!): Review!
   deleteUser: User!
   loginUser(loginInput: LoginInput!): AuthUser
   registerUser(registerInput: RegisterInput!): AuthUser!
+  updateReview(reviewInput: ReviewInput!, reviewWhere: ReviewWhere!): Review!
   updateUser(userInput: UserInput!): User
 }
 
 type Query {
+  review(reviewWhere: ReviewWhere!): Review
   user: User
 }
 
@@ -65,6 +68,13 @@ input ReviewInput {
   movieId: String!
   rating: Float!
   title: String
+}
+
+input ReviewWhere {
+  id: ID!
+  movieId: String
+  rating: Float
+  userId: Int
 }
 
 type User {
