@@ -3,6 +3,7 @@ from resources.model import BaseModel
 from resources.movie.movie_model import MovieModel
 from resources.review.review_model import ReviewModel
 
+
 class UserModel(BaseModel):
     __primarykey__ = "id"
     __primarylabel__ = "User"
@@ -16,6 +17,9 @@ class UserModel(BaseModel):
 
     def find_favourited(self):
         pass
+
+    def find_wrote_review(self):
+        return [wr.json() for wr in self.wrote_review]
 
     def json(self):
         return {

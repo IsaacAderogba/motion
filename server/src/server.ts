@@ -12,6 +12,10 @@ import { knex } from "./db/knexConfig";
 import { Model } from "objection";
 
 import { UserController, UserFlaskAPI } from "./resources/user/UserDatasource";
+import {
+  ReviewController,
+  ReviewFlaskAPI,
+} from "./resources/review/ReviewDatasource";
 
 Model.knex(knex);
 const app = express();
@@ -67,6 +71,8 @@ const apolloServer = new ApolloServer({
   dataSources: () => ({
     UserController,
     UserFlaskAPI,
+    ReviewController,
+    ReviewFlaskAPI,
   }),
 });
 

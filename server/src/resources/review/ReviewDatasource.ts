@@ -6,6 +6,7 @@ import { RESTDataSource } from "apollo-datasource-rest";
 import { IReviewModel, ReviewModel, INeo4jReview } from "./ReviewModel";
 import { knexConfig } from "../../db/knexConfig";
 import { Transaction } from "objection";
+import { Optional } from "../types";
 
 class _ReviewController extends SQLDataSource {
   model = ReviewModel;
@@ -15,7 +16,7 @@ class _ReviewController extends SQLDataSource {
   }
 
   async createReview(
-    review: Pick<INeo4jReview, "movieId" | "userId">,
+    review: Pick<IReviewModel, "movieId" | "userId">,
     trx: Transaction
   ) {
     const insertedReview = await this.model.query(trx).insertAndFetch(review);
@@ -64,7 +65,17 @@ class _ReviewFlaskAPI extends RESTDataSource {
     this.baseURL = `${process.env.FLASK_API_URL}/api`;
   }
 
-  async postReview(review: INeo4jReview) {
+  async postReview(
+    review: Optional<
+      INeo4jReview,
+      | "createdAt"
+      | "updatedAt"
+      | "title"
+      | "description"
+      | "reviewed_movie"
+      | "user"
+    >
+  ) {
     const savedReview = await this.post<INeo4jReview>(
       `/review/${review.id}`,
       review
@@ -72,7 +83,7 @@ class _ReviewFlaskAPI extends RESTDataSource {
     return savedReview;
   }
 
-  async putReview(review: INeo4jReview) {
+  async putReview(review: Partial<INeo4jReview>) {
     const updatedReview = await this.put<INeo4jReview>(
       `/review/${review.id}`,
       review

@@ -25,6 +25,12 @@ export interface NexusGenInputs {
     lastName: string; // String!
     password: string; // String!
   }
+  ReviewInput: { // input type
+    description?: string | null; // String
+    movieId: string; // String!
+    rating: number; // Float!
+    title?: string | null; // String
+  }
   UserInput: { // input type
     firstName?: string | null; // String
     isVerified?: boolean | null; // Boolean
@@ -45,8 +51,27 @@ export interface NexusGenRootTypes {
     lastName: string; // String!
     token: string; // String!
   }
+  Movie: { // root type
+    duration: string; // String!
+    id: string; // ID!
+    movieUrl: string; // String!
+    rating: number; // Float!
+    summary: string; // String!
+    title: string; // String!
+    year: number; // Int!
+  }
   Mutation: {};
   Query: {};
+  Review: { // root type
+    createdAt: string; // String!
+    description?: string | null; // String
+    id: string; // ID!
+    movieId: string; // String!
+    rating: number; // Float!
+    title?: string | null; // String
+    updatedAt: string; // String!
+    userId: number; // Int!
+  }
   User: { // root type
     avatarId?: string | null; // String
     avatarURL?: string | null; // String
@@ -66,6 +91,7 @@ export interface NexusGenRootTypes {
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   LoginInput: NexusGenInputs['LoginInput'];
   RegisterInput: NexusGenInputs['RegisterInput'];
+  ReviewInput: NexusGenInputs['ReviewInput'];
   UserInput: NexusGenInputs['UserInput'];
 }
 
@@ -79,7 +105,17 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User'] | null; // User
   }
+  Movie: { // field return type
+    duration: string; // String!
+    id: string; // ID!
+    movieUrl: string; // String!
+    rating: number; // Float!
+    summary: string; // String!
+    title: string; // String!
+    year: number; // Int!
+  }
   Mutation: { // field return type
+    createReview: NexusGenRootTypes['Review']; // Review!
     deleteUser: NexusGenRootTypes['User']; // User!
     loginUser: NexusGenRootTypes['AuthUser'] | null; // AuthUser
     registerUser: NexusGenRootTypes['AuthUser']; // AuthUser!
@@ -87,6 +123,18 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     user: NexusGenRootTypes['User'] | null; // User
+  }
+  Review: { // field return type
+    createdAt: string; // String!
+    description: string | null; // String
+    id: string; // ID!
+    movie: NexusGenRootTypes['Movie'] | null; // Movie
+    movieId: string; // String!
+    rating: number; // Float!
+    title: string | null; // String
+    updatedAt: string; // String!
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: number; // Int!
   }
   User: { // field return type
     avatarId: string | null; // String
@@ -101,6 +149,9 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createReview: { // args
+      reviewInput: NexusGenInputs['ReviewInput']; // ReviewInput!
+    }
     loginUser: { // args
       loginInput: NexusGenInputs['LoginInput']; // LoginInput!
     }
@@ -118,9 +169,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthUser" | "Mutation" | "Query" | "User";
+export type NexusGenObjectNames = "AuthUser" | "Movie" | "Mutation" | "Query" | "Review" | "User";
 
-export type NexusGenInputNames = "LoginInput" | "RegisterInput" | "UserInput";
+export type NexusGenInputNames = "LoginInput" | "RegisterInput" | "ReviewInput" | "UserInput";
 
 export type NexusGenEnumNames = never;
 

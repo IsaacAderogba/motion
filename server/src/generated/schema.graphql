@@ -17,7 +17,18 @@ input LoginInput {
   password: String!
 }
 
+type Movie {
+  duration: String!
+  id: ID!
+  movieUrl: String!
+  rating: Float!
+  summary: String!
+  title: String!
+  year: Int!
+}
+
 type Mutation {
+  createReview(reviewInput: ReviewInput!): Review!
   deleteUser: User!
   loginUser(loginInput: LoginInput!): AuthUser
   registerUser(registerInput: RegisterInput!): AuthUser!
@@ -34,6 +45,26 @@ input RegisterInput {
   firstName: String!
   lastName: String!
   password: String!
+}
+
+type Review {
+  createdAt: String!
+  description: String
+  id: ID!
+  movie: Movie
+  movieId: String!
+  rating: Float!
+  title: String
+  updatedAt: String!
+  user: User
+  userId: Int!
+}
+
+input ReviewInput {
+  description: String
+  movieId: String!
+  rating: Float!
+  title: String
 }
 
 type User {

@@ -10,14 +10,15 @@ class BaseModel(GraphObject):
     way we interact with them.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         for key, value in kwargs.items():
-            if hasattr(self, key):
+            if not getattr(self, key) and hasattr(self, key):
                 setattr(self, key, value)
 
     @classmethod
-    def find_by_id(cls, primary_key):
-        return cls.match(graph, primary_key).first()
+    def find_by_id(cls, id):
+        # return graph.nodes.match(cls.__primarylabel__, id=id).first()
+        return cls.match(graph).where(id=id).first()
 
     @classmethod
     def find_all(cls):
@@ -27,13 +28,13 @@ class BaseModel(GraphObject):
         graph.delete(self)
 
     def save(self):
-        found_model = self.find_by_id(getattr(self, self.__primarykey__))
+        found_model = self.find_by_id(self.id)
+        print(found_model)
 
         if found_model:
             node = found_model.__node__
             for key in dict(node):
                 if not getattr(self, key):
-                    print(node[key])
                     setattr(self, key, node[key])
 
         graph.push(self)

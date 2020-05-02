@@ -33,10 +33,11 @@ class User(Resource):
 
     def delete(self, id):
         user = UserModel.find_by_id(id)
+        userDetails = user.json()
 
         if user:
             user.delete()
-            return user.json(), 200
+            return userDetails, 200
         else:
             return {"message": "User with id of {} does not exist".format(id)}
 

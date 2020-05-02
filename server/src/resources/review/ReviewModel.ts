@@ -13,7 +13,7 @@ export interface INeo4jReview extends IReviewModel {
   rating: number;
   createdAt: string;
   updatedAt: string;
-  user: INeo4jUser;
+  user: any;
   reviewed_movie: any;
 }
 
