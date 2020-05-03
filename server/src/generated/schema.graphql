@@ -12,19 +12,34 @@ type AuthUser {
   user: User
 }
 
+type Genre {
+  id: ID!
+  name: String!
+}
+
 input LoginInput {
   email: String!
   password: String!
 }
 
 type Movie {
+  actors: [Person!]!
+  directors: [Person!]!
   duration: String!
+  favourites: [User!]!
   id: ID!
+  in_genre: [Genre!]!
   movieUrl: String!
   rating: Float!
+  reviews: [Review!]!
   summary: String!
   title: String!
+  writers: [Person!]!
   year: Int!
+}
+
+input MovieWhere {
+  id: ID!
 }
 
 type Mutation {
@@ -37,7 +52,13 @@ type Mutation {
   updateUser(userInput: UserInput!): User
 }
 
+type Person {
+  id: ID!
+  name: String!
+}
+
 type Query {
+  movie(movieWhere: MovieWhere!): Movie
   review(reviewWhere: ReviewWhere!): Review
   user: User
 }

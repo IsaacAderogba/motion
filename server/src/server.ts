@@ -70,11 +70,11 @@ const apolloServer = new ApolloServer({
     path: "/subscriptions",
   },
   dataSources: () => ({
-    UserController,
-    UserFlaskAPI,
-    ReviewController,
-    ReviewFlaskAPI,
-    MovieFlaskAPI,
+    UserController: new UserController(),
+    UserFlaskAPI: new UserFlaskAPI(),
+    ReviewController: new ReviewController(),
+    ReviewFlaskAPI: new ReviewFlaskAPI(),
+    MovieFlaskAPI: new MovieFlaskAPI(),
   }),
 });
 

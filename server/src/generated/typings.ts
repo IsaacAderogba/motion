@@ -18,6 +18,9 @@ export interface NexusGenInputs {
     email: string; // String!
     password: string; // String!
   }
+  MovieWhere: { // input type
+    id: string; // ID!
+  }
   RegisterInput: { // input type
     avatarURL?: string | null; // String
     email: string; // String!
@@ -57,16 +60,30 @@ export interface NexusGenRootTypes {
     lastName: string; // String!
     token: string; // String!
   }
-  Movie: { // root type
-    duration: string; // String!
+  Genre: { // root type
     id: string; // ID!
+    name: string; // String!
+  }
+  Movie: { // root type
+    actors: NexusGenRootTypes['Person'][]; // [Person!]!
+    directors: NexusGenRootTypes['Person'][]; // [Person!]!
+    duration: string; // String!
+    favourites: NexusGenRootTypes['User'][]; // [User!]!
+    id: string; // ID!
+    in_genre: NexusGenRootTypes['Genre'][]; // [Genre!]!
     movieUrl: string; // String!
     rating: number; // Float!
+    reviews: NexusGenRootTypes['Review'][]; // [Review!]!
     summary: string; // String!
     title: string; // String!
+    writers: NexusGenRootTypes['Person'][]; // [Person!]!
     year: number; // Int!
   }
   Mutation: {};
+  Person: { // root type
+    id: string; // ID!
+    name: string; // String!
+  }
   Query: {};
   Review: { // root type
     createdAt: string; // String!
@@ -96,6 +113,7 @@ export interface NexusGenRootTypes {
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   LoginInput: NexusGenInputs['LoginInput'];
+  MovieWhere: NexusGenInputs['MovieWhere'];
   RegisterInput: NexusGenInputs['RegisterInput'];
   ReviewInput: NexusGenInputs['ReviewInput'];
   ReviewWhere: NexusGenInputs['ReviewWhere'];
@@ -112,13 +130,23 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User'] | null; // User
   }
-  Movie: { // field return type
-    duration: string; // String!
+  Genre: { // field return type
     id: string; // ID!
+    name: string; // String!
+  }
+  Movie: { // field return type
+    actors: NexusGenRootTypes['Person'][]; // [Person!]!
+    directors: NexusGenRootTypes['Person'][]; // [Person!]!
+    duration: string; // String!
+    favourites: NexusGenRootTypes['User'][]; // [User!]!
+    id: string; // ID!
+    in_genre: NexusGenRootTypes['Genre'][]; // [Genre!]!
     movieUrl: string; // String!
     rating: number; // Float!
+    reviews: NexusGenRootTypes['Review'][]; // [Review!]!
     summary: string; // String!
     title: string; // String!
+    writers: NexusGenRootTypes['Person'][]; // [Person!]!
     year: number; // Int!
   }
   Mutation: { // field return type
@@ -130,7 +158,12 @@ export interface NexusGenFieldTypes {
     updateReview: NexusGenRootTypes['Review']; // Review!
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
+  Person: { // field return type
+    id: string; // ID!
+    name: string; // String!
+  }
   Query: { // field return type
+    movie: NexusGenRootTypes['Movie'] | null; // Movie
     review: NexusGenRootTypes['Review'] | null; // Review
     user: NexusGenRootTypes['User'] | null; // User
   }
@@ -180,6 +213,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    movie: { // args
+      movieWhere: NexusGenInputs['MovieWhere']; // MovieWhere!
+    }
     review: { // args
       reviewWhere: NexusGenInputs['ReviewWhere']; // ReviewWhere!
     }
@@ -191,9 +227,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthUser" | "Movie" | "Mutation" | "Query" | "Review" | "User";
+export type NexusGenObjectNames = "AuthUser" | "Genre" | "Movie" | "Mutation" | "Person" | "Query" | "Review" | "User";
 
-export type NexusGenInputNames = "LoginInput" | "RegisterInput" | "ReviewInput" | "ReviewWhere" | "UserInput";
+export type NexusGenInputNames = "LoginInput" | "MovieWhere" | "RegisterInput" | "ReviewInput" | "ReviewWhere" | "UserInput";
 
 export type NexusGenEnumNames = never;
 

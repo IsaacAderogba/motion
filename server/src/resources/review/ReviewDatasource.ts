@@ -8,7 +8,7 @@ import { knexConfig } from "../../db/knexConfig";
 import { Transaction } from "objection";
 import { Optional } from "../types";
 
-class _ReviewController extends SQLDataSource {
+export class ReviewController extends SQLDataSource {
   model = ReviewModel;
 
   constructor() {
@@ -59,7 +59,7 @@ class _ReviewController extends SQLDataSource {
   }
 }
 
-class _ReviewFlaskAPI extends RESTDataSource {
+export class ReviewFlaskAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = `${process.env.FLASK_API_URL}/api`;
@@ -86,7 +86,7 @@ class _ReviewFlaskAPI extends RESTDataSource {
   async readReview(review: Partial<INeo4jReview>) {
     const fetchedReview = await this.get<INeo4jReview>(
       `/review/${review.id}`,
-      review
+      review,
     );
     return fetchedReview;
   }
@@ -104,5 +104,3 @@ class _ReviewFlaskAPI extends RESTDataSource {
   }
 }
 
-export const ReviewController = new _ReviewController();
-export const ReviewFlaskAPI = new _ReviewFlaskAPI();

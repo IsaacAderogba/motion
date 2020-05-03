@@ -17,7 +17,7 @@ import { Maybe } from "../types";
 import { generateAuthUser } from "./UserUtils";
 import { knexConfig } from "../../db/knexConfig";
 
-class _UserController extends SQLDataSource {
+export class UserController extends SQLDataSource {
   model = UserModel;
 
   constructor() {
@@ -53,7 +53,9 @@ class _UserController extends SQLDataSource {
     return null;
   }
 
-  async authenticateUser(token: string): Promise<Maybe<IAuthorizedUser>> {
+  static async authenticateUser(
+    token: string
+  ): Promise<Maybe<IAuthorizedUser>> {
     if (!token) return null;
 
     const decodedToken = jwt.verify(
@@ -61,8 +63,7 @@ class _UserController extends SQLDataSource {
       process.env.JWT_SECRET || "secret"
     ) as IUserPayload;
 
-    const foundUser = await this.model
-      .query()
+    const foundUser = await UserModel.query()
       .findById(decodedToken.id)
       .throwIfNotFound();
 
@@ -74,6 +75,11 @@ class _UserController extends SQLDataSource {
   async readUser(where: Partial<IUserModel>) {
     const foundUser = await this.model.query().findOne(where).throwIfNotFound();
     return foundUser.$toData();
+  }
+
+  async readUserList(ids: IUserModel['id'][]) {
+    const foundUserList = await this.model.query().findByIds(ids);
+    return foundUserList.map(user => user.$toData());
   }
 
   async updateUser(
@@ -103,7 +109,7 @@ class _UserController extends SQLDataSource {
 }
 
 // UserAPI for interacting with our Neo4j server
-class _UserFlaskAPI extends RESTDataSource {
+export class UserFlaskAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = `${process.env.FLASK_API_URL}/api`;
@@ -124,6 +130,3 @@ class _UserFlaskAPI extends RESTDataSource {
     return deletedUser;
   }
 }
-
-export const UserController = new _UserController();
-export const UserFlaskAPI = new _UserFlaskAPI();

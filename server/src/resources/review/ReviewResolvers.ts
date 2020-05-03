@@ -22,6 +22,7 @@ export const ReviewQuery = extendType({
           ...reviewWhere,
           id: parseInt(reviewWhere.id),
         });
+
         return { ...fetchedReview, id: fetchedReview.id.toString() };
       },
     });
@@ -115,7 +116,7 @@ export const ReviewMutation = extendType({
           const fetchedReview = await ReviewFlaskAPI.deleteReview(
             deletedReview.id
           );
-          
+
           return { ...fetchedReview, id: fetchedReview.id.toString() };
         });
       },

@@ -4,7 +4,7 @@ import { RESTDataSource } from "apollo-datasource-rest";
 // helpers
 import { INeo4jMovie } from "./MovieModel";
 
-class _MovieFlaskAPI extends RESTDataSource {
+export class MovieFlaskAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = `${process.env.FLASK_API_URL}/api`;
@@ -20,4 +20,3 @@ class _MovieFlaskAPI extends RESTDataSource {
   }
 }
 
-export const MovieFlaskAPI = new _MovieFlaskAPI();
