@@ -19,32 +19,35 @@ class MovieModel(BaseModel):
     writers = RelatedFrom("Person", "WROTE")
     actors = RelatedFrom("Person", "ACTED_IN")
     favourites = RelatedFrom("User", "FAVOURITED")
-    reviews = RelatedFrom("Review", "REVIEWED")
+    reviews = RelatedFrom("Review", "REVIEWED_MOVIE")
 
     in_genre = RelatedTo(GenreModel, "IN_GENRE")
 
     def find_directors(self):
-        pass
+        return self.find_related_from("DIRECTED")
 
     def find_writers(self):
-        pass
+        return self.find_related_from("WROTE")
 
     def find_actors(self):
-        pass
+        return self.find_related_from("ACTED_IN")
 
     def find_favourites(self):
-        pass
+        return self.find_related_from("FAVOURITED")
+
+    def find_reviews(self):
+        return self.find_related_from("REVIEWED_MOVIE")
 
     def find_genres(self):
-        pass
+        return self.find_related_to(self.in_genre)
 
     def json(self):
         return {
-            "id": self.id,
-            "title": self.title,
-            "year": self.year,
-            "duration": self.duration,
-            "summary": self.summary,
-            "rating": self.rating,
-            "movieUrl": self.movieUrl
+            **dict(self.__node__),
+            "directors": self.find_directors(),
+            "writers": self.find_writers(),
+            "actors": self.find_actors(),
+            "favourites": self.find_favourites(),
+            "reviews": self.find_reviews(),
+            "in_genre": self.find_genres()
         }

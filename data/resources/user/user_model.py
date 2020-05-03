@@ -23,7 +23,5 @@ class UserModel(BaseModel):
 
     def json(self):
         return {
-            "id": self.id,
-            "firstName": self.firstName,
-            "lastName": self.lastName
+            **dict(self.__node__),
         }

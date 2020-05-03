@@ -16,6 +16,5 @@ class GenreModel(BaseModel):
 
     def json(self):
         return {
-            'id': self.id,
-            'name': self.name
+            **dict(self.__node__),
         }

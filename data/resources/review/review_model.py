@@ -30,13 +30,12 @@ class ReviewModel(BaseModel):
     reviewed_movie = RelatedTo(MovieModel, "REVIEWED_MOVIE")
 
     def find_reviewed_movie(self):
-        return [dict(r.__node__) for r in self.reviewed_movie]
+        return self.find_related_to(self.reviewed_movie)
 
     def find_user(self):
-        return [dict(rel.start_node) for rel in graph.match(nodes=(None, self.__node__), r_type="WROTE_REVIEW")]
+        return self.find_related_from("WROTE_REVIEW")
 
-    def json(self):
-        dict(self.__node__)
+    def json(self):        
         return {
             **dict(self.__node__),
             "user": self.find_user(),

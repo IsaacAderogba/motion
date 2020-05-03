@@ -71,6 +71,7 @@ class Review(Resource):
         review = ReviewModel(**data, updatedAt=updatedAt)
 
         review.save()
+        print(review.json())
         return review.json(), 201
 
     def delete(self, id):
