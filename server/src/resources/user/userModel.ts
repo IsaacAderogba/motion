@@ -1,4 +1,6 @@
 import { Model } from "objection";
+import { INeo4jMovie } from "../movie/MovieModel";
+import { INeo4jReview } from "../review/ReviewModel";
 
 export interface IAuthorizedUser {
   id: IUserModel["id"];
@@ -23,7 +25,13 @@ export interface IAuthUser {
   token: string;
 }
 
-export type INeo4jUser = Pick<IUserModel, "id" | "firstName" | "lastName">;
+export interface INeo4jUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  favourited: INeo4jMovie[];
+  wrote_review: INeo4jReview[];
+}
 
 export interface IUserPayload {
   id: number;

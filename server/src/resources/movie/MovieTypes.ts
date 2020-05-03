@@ -10,6 +10,7 @@ export const Movie = objectType({
     t.string("summary", { nullable: false });
     t.float("rating", { nullable: false });
     t.string("movieUrl", { nullable: false });
-    // movie also has directors, writers, actors, favourites, reviews, genre
+    // movie also has directors, writers, actors, favourites, reviews, in_genre
+    
   },
 });

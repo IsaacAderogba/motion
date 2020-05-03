@@ -16,6 +16,7 @@ import {
   ReviewController,
   ReviewFlaskAPI,
 } from "./resources/review/ReviewDatasource";
+import { MovieFlaskAPI } from "./resources/movie/MovieDatasource";
 
 Model.knex(knex);
 const app = express();
@@ -73,6 +74,7 @@ const apolloServer = new ApolloServer({
     UserFlaskAPI,
     ReviewController,
     ReviewFlaskAPI,
+    MovieFlaskAPI,
   }),
 });
 

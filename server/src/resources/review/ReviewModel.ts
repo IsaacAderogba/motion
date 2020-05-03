@@ -1,5 +1,6 @@
 import { Model } from "objection";
 import { INeo4jUser } from "../user/UserModel";
+import { INeo4jMovie } from '../movie/MovieModel';
 
 export interface IReviewModel<Id = number> {
   id: Id;
@@ -13,8 +14,8 @@ export interface INeo4jReview extends IReviewModel {
   rating: number;
   createdAt: string;
   updatedAt: string;
-  user: any;
-  reviewed_movie: any;
+  user: INeo4jUser[];
+  reviewed_movie: INeo4jMovie[];
 }
 
 export class ReviewModel extends Model implements IReviewModel {
