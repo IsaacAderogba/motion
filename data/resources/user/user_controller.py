@@ -22,7 +22,12 @@ class User(Resource):
         return user.json(), 201
 
     def get(self, id):
-        pass
+        user = UserModel.find_by_id(id)
+
+        if not user:
+            return {"message": "A user with id '{}' doesn't exist.".format(id)}, 400
+
+        return user.json(), 200
 
     def put(self, id):
         data = User.parser.parse_args()

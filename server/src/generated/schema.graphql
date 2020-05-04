@@ -58,9 +58,11 @@ type Mutation {
 }
 
 type Neo4jUser {
+  favourited: [Movie!]!
   firstName: String!
   id: Int!
   lastName: String!
+  wrote_review: [Review!]!
 }
 
 type Person {
@@ -122,10 +124,12 @@ type User {
   avatarId: String
   avatarURL: String
   email: String!
+  favourited: [Movie!]!
   firstName: String!
   id: ID!
   isVerified: Boolean!
   lastName: String!
+  wrote_review: [Review!]!
 }
 
 input UserInput {

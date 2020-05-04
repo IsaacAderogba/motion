@@ -1,4 +1,6 @@
 import { objectType, inputObjectType } from "@nexus/schema";
+import { Movie } from "../movie/MovieTypes";
+import { Review } from "../review/ReviewTypes";
 
 export const AuthUser = objectType({
   name: "AuthUser",
@@ -34,6 +36,22 @@ export const Neo4jUser = objectType({
     t.string("lastName", {
       nullable: false,
     });
+    t.list.field("favourited", {
+      type: Movie,
+      nullable: false,
+      resolve: async (parent, args, { dataSources: { UserFlaskAPI } }) => {
+        const user = await UserFlaskAPI.readUser({ id: parent.id });
+        return user.favourited;
+      },
+    });
+    t.list.field("wrote_review", {
+      type: Review,
+      nullable: false,
+      resolve: async (parent, args, { dataSources: { UserFlaskAPI } }) => {
+        const user = await UserFlaskAPI.readUser({ id: parent.id });
+        return user.wrote_review;
+      },
+    });
   },
 });
 
@@ -60,6 +78,22 @@ export const User = objectType({
     });
     t.boolean("isVerified", {
       nullable: false,
+    });
+    t.list.field("favourited", {
+      type: Movie,
+      nullable: false,
+      resolve: async (parent, args, { dataSources: { UserFlaskAPI } }) => {
+        const user = await UserFlaskAPI.readUser({ id: parseInt(parent.id) });
+        return user.favourited;
+      },
+    });
+    t.list.field("wrote_review", {
+      type: Review,
+      nullable: false,
+      resolve: async (parent, args, { dataSources: { UserFlaskAPI } }) => {
+        const user = await UserFlaskAPI.readUser({ id: parseInt(parent.id) });
+        return user.wrote_review;
+      },
     });
   },
 });

@@ -77,9 +77,9 @@ export class UserController extends SQLDataSource {
     return foundUser.$toData();
   }
 
-  async readUserList(ids: IUserModel['id'][]) {
+  async readUserList(ids: IUserModel["id"][]) {
     const foundUserList = await this.model.query().findByIds(ids);
-    return foundUserList.map(user => user.$toData());
+    return foundUserList.map((user) => user.$toData());
   }
 
   async updateUser(
@@ -115,12 +115,16 @@ export class UserFlaskAPI extends RESTDataSource {
     this.baseURL = `${process.env.FLASK_API_URL}/api`;
   }
 
-  async postUser(user: INeo4jUser) {
+  async postUser(user: Pick<INeo4jUser, "id" | "firstName" | "lastName">) {
     const savedUser = await this.post<INeo4jUser>(`/user/${user.id}`, user);
     return savedUser;
   }
 
-  async putUser(user: INeo4jUser) {
+  async readUser(user: Partial<INeo4jUser>) {
+    return this.get<INeo4jUser>(`/user/${user.id}`, user);
+  }
+
+  async putUser(user: Partial<INeo4jUser>) {
     const updatedUser = await this.put<INeo4jUser>(`/user/${user.id}`, user);
     return updatedUser;
   }

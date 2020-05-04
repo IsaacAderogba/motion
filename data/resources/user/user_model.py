@@ -16,12 +16,14 @@ class UserModel(BaseModel):
     wrote_review = RelatedTo(ReviewModel)
 
     def find_favourited(self):
-        pass
+        return self.find_related_to(self.favourited)
 
     def find_wrote_review(self):
-        return [wr.json() for wr in self.wrote_review]
+        return self.find_related_to(self.wrote_review)
 
     def json(self):
         return {
             **dict(self.__node__),
+            "favourited": self.find_favourited(),
+            "wrote_review": self.find_wrote_review()
         }

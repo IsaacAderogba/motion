@@ -177,9 +177,11 @@ export interface NexusGenFieldTypes {
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Neo4jUser: { // field return type
+    favourited: NexusGenRootTypes['Movie'][]; // [Movie!]!
     firstName: string; // String!
     id: number; // Int!
     lastName: string; // String!
+    wrote_review: NexusGenRootTypes['Review'][]; // [Review!]!
   }
   Person: { // field return type
     acted_in: NexusGenRootTypes['Movie'][]; // [Movie!]!
@@ -211,10 +213,12 @@ export interface NexusGenFieldTypes {
     avatarId: string | null; // String
     avatarURL: string | null; // String
     email: string; // String!
+    favourited: NexusGenRootTypes['Movie'][]; // [Movie!]!
     firstName: string; // String!
     id: string; // ID!
     isVerified: boolean; // Boolean!
     lastName: string; // String!
+    wrote_review: NexusGenRootTypes['Review'][]; // [Review!]!
   }
 }
 
