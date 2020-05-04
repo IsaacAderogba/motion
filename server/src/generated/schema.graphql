@@ -97,12 +97,12 @@ type Review {
   createdAt: String!
   description: String
   id: Int!
-  movie: Movie
   movieId: String!
   rating: Float!
+  reviewed_movie: [Movie!]
   title: String
   updatedAt: String!
-  user: User
+  user: [Neo4jUser!]
   userId: Int!
 }
 

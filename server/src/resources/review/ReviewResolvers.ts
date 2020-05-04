@@ -18,12 +18,10 @@ export const ReviewQuery = extendType({
         { reviewWhere },
         { dataSources: { ReviewFlaskAPI } }
       ) => {
-        const fetchedReview = await ReviewFlaskAPI.readReview({
+        return ReviewFlaskAPI.readReview({
           ...reviewWhere,
           id: parseInt(reviewWhere.id),
         });
-
-        return { ...fetchedReview, id: fetchedReview.id.toString() };
       },
     });
   },
@@ -49,14 +47,12 @@ export const ReviewMutation = extendType({
             trx
           );
 
-          const fetchedReview = await ReviewFlaskAPI.postReview({
+          return ReviewFlaskAPI.postReview({
             rating,
             description,
             title,
             ...createdReview,
           });
-
-          return { ...fetchedReview, id: fetchedReview.id.toString() };
         });
       },
     });
@@ -80,12 +76,10 @@ export const ReviewMutation = extendType({
               id: parseInt(reviewWhere.id),
             });
 
-            const updatedReview = await ReviewFlaskAPI.putReview({
+            return ReviewFlaskAPI.putReview({
               ...foundReview,
               ...reviewInput,
             });
-
-            return { ...updatedReview, id: updatedReview.id.toString() };
           } catch (err) {
             throw new Error(err);
           }
@@ -113,11 +107,9 @@ export const ReviewMutation = extendType({
             trx
           );
 
-          const fetchedReview = await ReviewFlaskAPI.deleteReview(
+          return await ReviewFlaskAPI.deleteReview(
             deletedReview.id
           );
-
-          return { ...fetchedReview, id: fetchedReview.id.toString() };
         });
       },
     });

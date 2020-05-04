@@ -106,8 +106,10 @@ export interface NexusGenRootTypes {
     id: number; // Int!
     movieId: string; // String!
     rating: number; // Float!
+    reviewed_movie?: NexusGenRootTypes['Movie'][] | null; // [Movie!]
     title?: string | null; // String
     updatedAt: string; // String!
+    user?: NexusGenRootTypes['Neo4jUser'][] | null; // [Neo4jUser!]
     userId: number; // Int!
   }
   User: { // root type
@@ -201,12 +203,12 @@ export interface NexusGenFieldTypes {
     createdAt: string; // String!
     description: string | null; // String
     id: number; // Int!
-    movie: NexusGenRootTypes['Movie'] | null; // Movie
     movieId: string; // String!
     rating: number; // Float!
+    reviewed_movie: NexusGenRootTypes['Movie'][] | null; // [Movie!]
     title: string | null; // String
     updatedAt: string; // String!
-    user: NexusGenRootTypes['User'] | null; // User
+    user: NexusGenRootTypes['Neo4jUser'][] | null; // [Neo4jUser!]
     userId: number; // Int!
   }
   User: { // field return type

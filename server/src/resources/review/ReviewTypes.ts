@@ -1,5 +1,5 @@
 import { objectType, inputObjectType } from "@nexus/schema";
-import { User } from "../user/UserTypes";
+import { User, Neo4jUser } from "../user/UserTypes";
 import { Movie } from "../movie/MovieTypes";
 
 export const ReviewInput = inputObjectType({
@@ -33,20 +33,13 @@ export const Review = objectType({
     t.float("rating", { nullable: false });
     t.string("createdAt", { nullable: false });
     t.string("updatedAt", { nullable: false });
-    t.field("user", {
-      type: User,
+    t.list.field("user", {
+      type: Neo4jUser,
       nullable: true,
-      resolve: async (parent, args, { dataSources: { UserController } }) => {
-        const user = await UserController.readUser({ id: parent.userId });
-        return { ...user, id: user.id.toString() };
-      },
     });
-    t.field("movie", {
+    t.list.field("reviewed_movie", {
       type: Movie,
       nullable: true,
-      resolve: async (parent, args, context) => {
-        return null;
-      },
     });
   },
 });
