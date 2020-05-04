@@ -14,7 +14,12 @@ type AuthUser {
 
 type Genre {
   id: ID!
+  movies: [Movie!]!
   name: String!
+}
+
+input GenreWhere {
+  id: ID!
 }
 
 input LoginInput {
@@ -26,8 +31,8 @@ type Movie {
   actors: [Person!]!
   directors: [Person!]!
   duration: String!
-  favourites: [User!]!
-  id: ID!
+  favourites: [Neo4jUser!]!
+  id: String!
   in_genre: [Genre!]!
   movieUrl: String!
   rating: Float!
@@ -52,12 +57,19 @@ type Mutation {
   updateUser(userInput: UserInput!): User
 }
 
+type Neo4jUser {
+  firstName: String!
+  id: Int!
+  lastName: String!
+}
+
 type Person {
   id: ID!
   name: String!
 }
 
 type Query {
+  genre(genreWhere: GenreWhere!): Genre
   movie(movieWhere: MovieWhere!): Movie
   review(reviewWhere: ReviewWhere!): Review
   user: User
@@ -74,7 +86,7 @@ input RegisterInput {
 type Review {
   createdAt: String!
   description: String
-  id: ID!
+  id: Int!
   movie: Movie
   movieId: String!
   rating: Float!

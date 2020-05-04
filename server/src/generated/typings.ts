@@ -14,6 +14,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  GenreWhere: { // input type
+    id: string; // ID!
+  }
   LoginInput: { // input type
     email: string; // String!
     password: string; // String!
@@ -62,14 +65,15 @@ export interface NexusGenRootTypes {
   }
   Genre: { // root type
     id: string; // ID!
+    movies: NexusGenRootTypes['Movie'][]; // [Movie!]!
     name: string; // String!
   }
   Movie: { // root type
     actors: NexusGenRootTypes['Person'][]; // [Person!]!
     directors: NexusGenRootTypes['Person'][]; // [Person!]!
     duration: string; // String!
-    favourites: NexusGenRootTypes['User'][]; // [User!]!
-    id: string; // ID!
+    favourites: NexusGenRootTypes['Neo4jUser'][]; // [Neo4jUser!]!
+    id: string; // String!
     in_genre: NexusGenRootTypes['Genre'][]; // [Genre!]!
     movieUrl: string; // String!
     rating: number; // Float!
@@ -80,6 +84,11 @@ export interface NexusGenRootTypes {
     year: number; // Int!
   }
   Mutation: {};
+  Neo4jUser: { // root type
+    firstName: string; // String!
+    id: number; // Int!
+    lastName: string; // String!
+  }
   Person: { // root type
     id: string; // ID!
     name: string; // String!
@@ -88,7 +97,7 @@ export interface NexusGenRootTypes {
   Review: { // root type
     createdAt: string; // String!
     description?: string | null; // String
-    id: string; // ID!
+    id: number; // Int!
     movieId: string; // String!
     rating: number; // Float!
     title?: string | null; // String
@@ -112,6 +121,7 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  GenreWhere: NexusGenInputs['GenreWhere'];
   LoginInput: NexusGenInputs['LoginInput'];
   MovieWhere: NexusGenInputs['MovieWhere'];
   RegisterInput: NexusGenInputs['RegisterInput'];
@@ -132,14 +142,15 @@ export interface NexusGenFieldTypes {
   }
   Genre: { // field return type
     id: string; // ID!
+    movies: NexusGenRootTypes['Movie'][]; // [Movie!]!
     name: string; // String!
   }
   Movie: { // field return type
     actors: NexusGenRootTypes['Person'][]; // [Person!]!
     directors: NexusGenRootTypes['Person'][]; // [Person!]!
     duration: string; // String!
-    favourites: NexusGenRootTypes['User'][]; // [User!]!
-    id: string; // ID!
+    favourites: NexusGenRootTypes['Neo4jUser'][]; // [Neo4jUser!]!
+    id: string; // String!
     in_genre: NexusGenRootTypes['Genre'][]; // [Genre!]!
     movieUrl: string; // String!
     rating: number; // Float!
@@ -158,11 +169,17 @@ export interface NexusGenFieldTypes {
     updateReview: NexusGenRootTypes['Review']; // Review!
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
+  Neo4jUser: { // field return type
+    firstName: string; // String!
+    id: number; // Int!
+    lastName: string; // String!
+  }
   Person: { // field return type
     id: string; // ID!
     name: string; // String!
   }
   Query: { // field return type
+    genre: NexusGenRootTypes['Genre'] | null; // Genre
     movie: NexusGenRootTypes['Movie'] | null; // Movie
     review: NexusGenRootTypes['Review'] | null; // Review
     user: NexusGenRootTypes['User'] | null; // User
@@ -170,7 +187,7 @@ export interface NexusGenFieldTypes {
   Review: { // field return type
     createdAt: string; // String!
     description: string | null; // String
-    id: string; // ID!
+    id: number; // Int!
     movie: NexusGenRootTypes['Movie'] | null; // Movie
     movieId: string; // String!
     rating: number; // Float!
@@ -213,6 +230,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    genre: { // args
+      genreWhere: NexusGenInputs['GenreWhere']; // GenreWhere!
+    }
     movie: { // args
       movieWhere: NexusGenInputs['MovieWhere']; // MovieWhere!
     }
@@ -227,9 +247,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthUser" | "Genre" | "Movie" | "Mutation" | "Person" | "Query" | "Review" | "User";
+export type NexusGenObjectNames = "AuthUser" | "Genre" | "Movie" | "Mutation" | "Neo4jUser" | "Person" | "Query" | "Review" | "User";
 
-export type NexusGenInputNames = "LoginInput" | "MovieWhere" | "RegisterInput" | "ReviewInput" | "ReviewWhere" | "UserInput";
+export type NexusGenInputNames = "GenreWhere" | "LoginInput" | "MovieWhere" | "RegisterInput" | "ReviewInput" | "ReviewWhere" | "UserInput";
 
 export type NexusGenEnumNames = never;
 

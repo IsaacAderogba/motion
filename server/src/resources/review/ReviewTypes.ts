@@ -25,7 +25,7 @@ export const ReviewWhere = inputObjectType({
 export const Review = objectType({
   name: "Review",
   definition(t) {
-    t.id("id");
+    t.int("id");
     t.int("userId", { nullable: false });
     t.string("movieId", { nullable: false });
     t.string("title", { nullable: true });

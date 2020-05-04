@@ -12,9 +12,10 @@ class GenreModel(BaseModel):
     movies = RelatedFrom("Movie", "IN_GENRE")
 
     def find_movies(self):
-        pass
+        return self.find_related_from("IN_GENRE")
 
     def json(self):
         return {
             **dict(self.__node__),
+            "movies": self.find_movies()
         }

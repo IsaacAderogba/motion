@@ -14,12 +14,9 @@ export const MovieQuery = extendType({
       resolve: async (
         parent,
         { movieWhere },
-        { dataSources: { MovieFlaskAPI, UserController } }
+        { dataSources: { MovieFlaskAPI } }
       ) => {
-        const movie = await MovieFlaskAPI.readMovie(movieWhere);
-        const userIds = movie.favourites.map((favourite) => favourite.id);
-        const favourites = await UserController.readUserList(userIds);
-        return { ...movie, favourites };
+        return MovieFlaskAPI.readMovie(movieWhere);
       },
     });
   },

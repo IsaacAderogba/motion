@@ -3,6 +3,7 @@ import { ReviewController, ReviewFlaskAPI } from "./review/ReviewDatasource";
 import { IAuthorizedUser } from "./user/UserModel";
 import { MovieFlaskAPI } from "./movie/MovieDatasource";
 import { Maybe } from "./types";
+import { GenreFlaskAPI } from './genre/GenreDatasource';
 
 export interface Context {
   dataSources: {
@@ -11,6 +12,7 @@ export interface Context {
     ReviewController: ReviewController;
     ReviewFlaskAPI: ReviewFlaskAPI;
     MovieFlaskAPI: MovieFlaskAPI;
+    GenreFlaskAPI: GenreFlaskAPI;
   };
 
   user: Maybe<IAuthorizedUser>;

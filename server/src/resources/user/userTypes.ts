@@ -22,6 +22,21 @@ export const AuthUser = objectType({
   },
 });
 
+export const Neo4jUser = objectType({
+  name: "Neo4jUser",
+  definition(t) {
+    t.int("id", {
+      nullable: false,
+    });
+    t.string("firstName", {
+      nullable: false,
+    });
+    t.string("lastName", {
+      nullable: false,
+    });
+  },
+});
+
 export const User = objectType({
   name: "User",
   definition(t) {
