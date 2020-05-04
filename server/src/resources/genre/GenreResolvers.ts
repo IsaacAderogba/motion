@@ -16,7 +16,7 @@ export const GenreQuery = extendType({
         { genreWhere },
         { dataSources: { GenreFlaskAPI } }
       ) => {
-        return await GenreFlaskAPI.readGenre(genreWhere);
+        return GenreFlaskAPI.readGenre(genreWhere);
       },
     });
   },

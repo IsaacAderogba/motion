@@ -4,6 +4,7 @@ import { IAuthorizedUser } from "./user/UserModel";
 import { MovieFlaskAPI } from "./movie/MovieDatasource";
 import { Maybe } from "./types";
 import { GenreFlaskAPI } from './genre/GenreDatasource';
+import { PersonFlaskAPI } from './person/PersonDatasource';
 
 export interface Context {
   dataSources: {
@@ -13,6 +14,7 @@ export interface Context {
     ReviewFlaskAPI: ReviewFlaskAPI;
     MovieFlaskAPI: MovieFlaskAPI;
     GenreFlaskAPI: GenreFlaskAPI;
+    PersonFlaskAPI: PersonFlaskAPI;
   };
 
   user: Maybe<IAuthorizedUser>;

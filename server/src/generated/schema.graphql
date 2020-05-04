@@ -64,13 +64,21 @@ type Neo4jUser {
 }
 
 type Person {
+  acted_in: [Movie!]!
+  directed: [Movie!]!
   id: ID!
   name: String!
+  wrote: [Movie!]!
+}
+
+input PersonWhere {
+  id: ID!
 }
 
 type Query {
   genre(genreWhere: GenreWhere!): Genre
   movie(movieWhere: MovieWhere!): Movie
+  person(personWhere: PersonWhere!): Person
   review(reviewWhere: ReviewWhere!): Review
   user: User
 }

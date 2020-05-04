@@ -15,15 +15,18 @@ class PersonModel(BaseModel):
     wrote = RelatedTo(MovieModel)
 
     def find_acted_in(self):
-        pass
+        return self.find_related_to(self.acted_in)
 
     def find_directed(self):
-        pass
+        return self.find_related_to(self.directed)
 
     def find_wrote(self):
-        pass
+        return self.find_related_to(self.wrote)
 
     def json(self):
         return {
             **dict(self.__node__),
+            "acted_in": self.find_acted_in(),
+            "directed": self.find_directed(),
+            "wrote": self.find_wrote()
         }
